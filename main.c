@@ -43,7 +43,7 @@ void printHelp() {
 	puts("        a: Ascii   Each byte is printed in ascii, or '.' for non-ascii values");
 	puts("        c: Color   Each byte is printed as a █, colored according to its value");
 	puts("        s: Smart   Each byte is printed in ascii if printable, on a background colored according to its value");
-	puts("        x: heX     Each byte is printed as two lowercase hex digits");
+	puts("        x: hex     Each byte is printed as two lowercase hex digits");
 	puts("        X: heX     Each byte is printed as two uppercase hex digits");
 	puts("        The default layout string is xa for consistency with most hex editors.");
 	puts("        You can replace the default with the HXDMP_LAYOUT environment variable.");
