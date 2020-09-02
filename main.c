@@ -42,6 +42,7 @@ void printHelp() {
 	puts("        Available column types are:");
 	puts("        a: Ascii   Each byte is printed in ascii, or '.' for non-ascii values");
 	puts("        c: Color   Each byte is printed as a █, colored according to its value");
+	puts("        s: Smart   Each byte is printed in ascii if printable, on a background colored according to its value");
 	puts("        x: heX     Each byte is printed as two lowercase hex digits");
 	puts("        X: heX     Each byte is printed as two uppercase hex digits");
 	puts("        The default layout string is xa for consistency with most hex editors.");
@@ -297,6 +298,25 @@ int main(int argc, char** argv)
 								}
 							}
 							printf("█");
+						} else {
+							printf(" ");
+						}
+					}
+					printf("\e[0m");
+					printf(" |");
+					break;
+				case 's':
+					printf(" ");
+					for (int i = 0; i < width; ++i) {
+						if (i < bytesRead) {
+							if (i == 0 || rowBuffer[i] != rowBuffer[i-1]) {
+								if (colorMode == TrueColor) {
+									printf("\e[48;2;%d;%d;%dm", rowBuffer[i], rowBuffer[i], rowBuffer[i]);
+								} else if (colorMode == VgaColor) {
+									printf("\e[48;5;%dm", 232+rowBuffer[i]/11);
+								}
+							}
+							printf("%c", rowBuffer[i] >= ' ' && rowBuffer[i] < 0x7f ? rowBuffer[i] : ' ');
 						} else {
 							printf(" ");
 						}
